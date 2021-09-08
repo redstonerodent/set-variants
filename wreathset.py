@@ -9,7 +9,8 @@ gap = 90 # distance from dot center to edge
 
 for order in permutations(range(3)):
 	for dots in range(8):
-		draw = ImageDraw.Draw(img := Image.new("RGB", cardsize, (255,255,255)))
+		img, draw = blankcard()
+		draw_orienter(draw)
 		for i,j in enumerate(order):
 			draw.line([(0, y+i*dist), (straightlen, y+i*dist), (cardwidth-straightlen, y+j*dist), (cardwidth, y+j*dist)], (0,0,0), 10, 'curve')
 		for i in range(3):

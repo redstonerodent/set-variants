@@ -7,7 +7,8 @@ x, y = cardwidth/2 - dist/2 - diam/2, cardheight/2 - dist - diam/2 # position of
 
 
 for n in range(1,64):
-	draw = ImageDraw.Draw(img := Image.new("RGB", cardsize, (255,255,255)))
+	img, draw = blankcard()
+	draw_orienter(draw)
 	for i,c in enumerate(colors):
 		if n>>i&1:
 			tx, ty = x + dist*(i%2), y + dist*(i//2)
