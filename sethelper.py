@@ -1,18 +1,17 @@
-from continuousEngine.core.geometry import Point
 from PIL import Image, ImageDraw, ImageFont
 
-cardsize = Point(825, 1125) # poker deck on thegamecrafter.com
+cardsize = cardwidth, cardheight = 825, 1125 # poker deck on thegamecrafter.com
 
 
 def setback(text, color):
-	midsize = Point(201, 501) # should be odd
+	midw, midh = 201, 501 # should be odd
 	rounding = 50
-	draw = ImageDraw.Draw(img := Image.new("RGB", cardsize.coords, color))
+	draw = ImageDraw.Draw(img := Image.new("RGB", cardsize, color))
 
-	draw.rounded_rectangle([(cardsize/2-midsize/2).coords, (cardsize/2+midsize/2).coords], rounding, (255,255,255))
+	draw.rounded_rectangle([cardwidth/2-midw/2, cardheight/2-midh/2, cardwidth/2+midw/2, cardheight/2+midh/2], rounding, (255,255,255))
 
-	d = ImageDraw.Draw(txt := Image.new("L", midsize.coords[::-1], 255))
-	d.text((midsize/2).coords[::-1], text, 0, ImageFont.truetype("Ubuntu-M.ttf", 200), "mm")
-	img.paste(txt.rotate(90, expand=True, fillcolor=255), ((cardsize-midsize)//2).coords)
+	d = ImageDraw.Draw(txt := Image.new("L", [midh, midw], 255))
+	d.text([midh/2, midw/2], text, 0, ImageFont.truetype("Ubuntu-M.ttf", 200), "mm")
+	img.paste(txt.rotate(90, expand=True, fillcolor=255), [(cardwidth-midw)//2, (cardheight-midh)//2])
 
 	return img
