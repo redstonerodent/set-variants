@@ -1,6 +1,4 @@
-from PIL import Image, ImageDraw, ImageFont, __version__
-
-print(__version__)
+from PIL import Image, ImageDraw, ImageFont
 
 width, height = 825, 1125 # for poker deck
 
