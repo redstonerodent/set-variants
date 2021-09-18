@@ -26,6 +26,7 @@ def drawpentagon(draw, cx, cy, inr, outr, theta, n, color):
 	for i,c in enumerate(colors):
 		draw.ellipse([x(i)-dot_rad, y(i)-dot_rad, x(i)+dot_rad, y(i)+dot_rad], c)
 	draw.line([x(n), y(n), x(n,inr), y(n,inr), x(n), y(n)], colors[n], thickness, 'curve')
+	draw.ellipse([x(n,inr)-dot_rad, y(n,inr)-dot_rad, x(n,inr)+dot_rad, y(n,inr)+dot_rad], colors[n])
 	# draw.polygon([x(n+1,inr), y(n+1,inr), x(n,inr), y(n,inr), x(n), y(n), x(n+1), y(n+1)], colors[n])
 
 	# hx, hy = math.sin(theta+math.pi*2/5*n)*r, math.cos(theta+math.pi*2/5*n)*r
@@ -39,9 +40,8 @@ for n in range(5**3):
 	for i,c in enumerate(pentagons):
 		theta = 0
 		# theta = random.random()
-		# drawpentagon(draw, cardwidth/2, cardheight/2+(i-1)*sep, 0, pent_rad, random.random()*2*math.pi, (n//(5**i))%5, c)
-		# drawpentagon(draw, cardwidth/2, cardheight/2+(i-1)*sep, 0, pent_rad, 0, (n//(5**i))%5, c)
-		drawpentagon(draw, cardwidth/2, cardheight/2, pent_rad*(2-i), pent_rad*(3-i), theta, (n//(5**i))%5, c)
+		drawpentagon(draw, cardwidth/2, cardheight/2+(i-1)*sep, 0, pent_rad, theta, (n//(5**i))%5, c)
+		# drawpentagon(draw, cardwidth/2, cardheight/2, pent_rad*(2-i), pent_rad*(3-i), theta, (n//(5**i))%5, c)
 	img.save(f'{folder}/fronts/{n}.png')
 
 setback('C53T', (255, 0, 255)).save(f'{folder}/back.png')
