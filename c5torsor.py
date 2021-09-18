@@ -1,6 +1,8 @@
 from sethelper import *
 import math
 
+folder = 'c5torsor'
+
 colors = [(255,0,0), (240,210,0), (0,255,0)]
 diam = 280  # diameter of pentagons
 rad = 40 # radius of dots
@@ -18,8 +20,17 @@ for n in range(5**3):
 		hx, hy = vertices[(n//(5**i))%5]
 		draw.line([cardwidth/2+hx, cardheight/2+(i-1)*sep+hy, cardwidth/2, cardheight/2+(i-1)*sep, cardwidth/2+hx, cardheight/2+(i-1)*sep+hy], (0,0,0), thickness, 'curve')
 		draw.ellipse([cardwidth/2+hx-rad, cardheight/2+(i-1)*sep+hy-rad, cardwidth/2+hx+rad, cardheight/2+(i-1)*sep+hy+rad], c, (0,0,0), 4)
-	img.save(f'c5torsor/fronts/{n}.png')
+	img.save(f'{folder}/fronts/{n}.png')
 
-setback('C53T', (255, 0, 255)).save('c5torsor/back.png')
+setback('C53T', (255, 0, 255)).save(f'{folder}/back.png')
 
-(cardwidth-diam)/2, (cardheight-diam)/2+(i-1)*sep
+textcard([
+	'Welcome to C53T, a Set-like game!',
+	'Cards: 125',
+	'Difficulty: Hard',
+	'Suggested Deal: 12',
+	'Guarantees Set: Unknown',
+	'Set Size: 5',
+	'Sets: In each color, the five directions must have a line of symmetry. Equivalently, all five in the same direction is valid, and rotating one arm one step clockwise and another arm one step counterclockwise preserves validity.',
+	'Math: Torsor for C_5^3',
+	]).save(f'{folder}/fronts/rules.png')

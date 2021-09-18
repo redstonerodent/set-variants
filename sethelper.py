@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
+import textwrap
 
 cardsize = cardwidth, cardheight = 825, 1125 # poker deck on thegamecrafter.com
 
@@ -26,3 +27,18 @@ def setback(text, color):
 
 	return img
 
+
+def textcard(parts):
+	top = 90
+	left = 90
+	fontsize = 35
+	font = ImageFont.truetype("UbuntuMono-R.ttf", fontsize)
+	img, draw = blankcard()
+
+	for p in parts:
+		for t in textwrap.wrap(p, 37):
+			draw.text([left, top], t, (0,0,0), font, "lt")
+			top += fontsize
+		top += fontsize
+
+	return img
