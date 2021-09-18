@@ -3,7 +3,7 @@ import math
 
 folder = 'c5torsor'
 
-colors = [(255,0,0), (240,210,0), (0,255,0)]
+colors = [(255,0,0), (0,255,0), (0,0,255)]
 diam = 280  # diameter of pentagons
 rad = 40 # radius of dots
 sep = 330 # distance between clocks
