@@ -29,14 +29,16 @@ def setback(text, color):
 
 
 def textcard(parts):
-	top = 90
+	chars = 37
+	lines = sum(len(textwrap.wrap(p,chars))+1 for p in parts)-1
 	left = 90
 	fontsize = 35
+	top = (cardheight - lines * fontsize)/2
 	font = ImageFont.truetype("UbuntuMono-R.ttf", fontsize)
 	img, draw = blankcard()
 
 	for p in parts:
-		for t in textwrap.wrap(p, 37):
+		for t in textwrap.wrap(p, chars):
 			draw.text([left, top], t, (0,0,0), font, "lt")
 			top += fontsize
 		top += fontsize
