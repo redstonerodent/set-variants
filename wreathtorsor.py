@@ -6,14 +6,14 @@ folder = 'wreathtorsor'
 
 hexrad = 200 # radius of outer hexagon
 thickness = 10 # black lines
-gap = 10 # white gaps
+gap = 5 # white gaps
 dotrad = 100 # radius of white circles
 width = 30 # outlined rhombi
 sep = 450 # between cube and octahedron
-parityrad = 60 # parity dot
+chir_rad = 40 # chirality spirals
 
 cubecolors = [(255,0,0), (0,255,0), (0,0,255)]
-octahedoncolors = [(155,0,255), (240, 150, 0), (255,0,200), (0,255,255)]
+octahedoncolors = [(145,0,215), (255, 150, 0), (255,0,200), (0,190,150)]
 
 x = lambda r, t: cardwidth/2+math.sin(t)*r
 cy = lambda r, t: cardheight/2-sep/2+math.cos(t)*r
@@ -60,9 +60,11 @@ for order in permutations(range(3)): # order[j] is the position of color j
 		draw.line([op(hexrad, math.pi/3*i) for i in range(8)], (0,0,0), thickness, 'curve')
 		draw.line([op(hexrad, math.pi/3*2*i) for i in range(5)], (0,0,0), thickness, 'curve')
 
-		# parity dot
-		if bit(dots,0)^bit(dots,1)^bit(dots,2)^(sum(order[i]>order[j] for i in range(3) for j in range(i,3))%2):
-			draw.ellipse([x(0,0)-parityrad, oy(0,0)-parityrad, x(0,0)+parityrad, oy(0,0)+parityrad], (0,0,0))
+		# chirality spirals
+		chirality = bit(dots,0)^bit(dots,1)^bit(dots,2)^(sum(order[i]>order[j] for i in range(3) for j in range(i,3))%2)
+		for i in range(3):
+			draw.arc([x(chir_rad-thickness/2, math.pi/3*2*i)-chir_rad, oy(chir_rad-thickness/2, math.pi/3*2*i)-chir_rad, x(chir_rad-thickness/2, math.pi/3*2*i)+chir_rad, oy(chir_rad-thickness/2, math.pi/3*2*i)+chir_rad],
+				*[90-120*i, 270-120*i][::(-1)**chirality], (0,0,0), thickness)
 
 		img.save(f'{folder}/fronts/{order}{dots}.png')
 

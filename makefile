@@ -1,5 +1,5 @@
 main:
-	for name in proset s4set wreathset c4torsor c5torsor wreathtorsor;\
+	for name in proset s4set wreathset c4torsor c5torsor wreathtorsor creases;\
 	do \
 		echo;\
 		echo $$name;\
