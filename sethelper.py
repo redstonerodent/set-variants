@@ -12,18 +12,18 @@ orienter_size = 200
 def draw_orienter(draw):
 	draw.polygon([(0,0), (0,orienter_size), (orienter_size,0)], (0,0,0))
 
-def setback(text, color):
+def setback(text, color, orienter=True):
 	midw, midh = 201, 501 # should be odd
 	rounding = 50
 	img, draw = blankcard(color)
 
 	draw.rounded_rectangle([cardwidth/2-midw/2-rounding, cardheight/2-midh/2-rounding, cardwidth/2+midw/2+rounding, cardheight/2+midh/2+rounding], rounding, (255,255,255))
 
-	d = ImageDraw.Draw(txt := Image.new("L", [midh, midw], 255))
-	d.text([midh/2, midw/2], text, 0, ImageFont.truetype("Ubuntu-M.ttf", 200), "mm")
-	img.paste(txt.rotate(90, expand=True, fillcolor=255), [(cardwidth-midw)//2, (cardheight-midh)//2])
+	d = ImageDraw.Draw(txt := Image.new("L", [midh+rounding, midw+rounding], 255))
+	d.text([(midh+rounding)/2, (midw+rounding)/2], text, 0, ImageFont.truetype("Ubuntu-M.ttf", 200), "mm")
+	img.paste(txt.rotate(90, expand=True, fillcolor=255), [(cardwidth-midw-rounding)//2, (cardheight-midh-rounding)//2])
 
-	draw.polygon([(cardwidth,0), (cardwidth,orienter_size), (cardwidth-orienter_size, 0)], (0,0,0))
+	if orienter: draw.polygon([(cardwidth,0), (cardwidth,orienter_size), (cardwidth-orienter_size, 0)], (0,0,0))
 
 	return img
 

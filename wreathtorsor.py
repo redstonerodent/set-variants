@@ -74,4 +74,4 @@ for order in permutations(range(3)): # order[j] is the position of color j
 
 		img.save(f'{folder}/fronts/{order}{dots}.png')
 
-setback('S4C2', (50,200,50)).save(f'{folder}/back.png')
+setback('OCTA', (50,200,50)).save(f'{folder}/back.png')
