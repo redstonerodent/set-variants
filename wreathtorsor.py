@@ -64,8 +64,14 @@ for order in permutations(range(3)): # order[j] is the position of color j
 		chirality = bit(dots,0)^bit(dots,1)^bit(dots,2)^(sum(order[i]>order[j] for i in range(3) for j in range(i,3))%2)
 		for i in range(3):
 			draw.arc([x(chir_rad-thickness/2, math.pi/3*2*i)-chir_rad, oy(chir_rad-thickness/2, math.pi/3*2*i)-chir_rad, x(chir_rad-thickness/2, math.pi/3*2*i)+chir_rad, oy(chir_rad-thickness/2, math.pi/3*2*i)+chir_rad],
-				*[90-120*i, 270-120*i][::(-1)**chirality], (0,0,0), thickness)
+				*[90-120*i, 270-120*i][::(-1)**chirality], [(0,0,0),(255,255,255)][chirality], thickness)
+			draw.ellipse([
+					 x(chir_rad*2-thickness, math.pi/3*2*i)-thickness,
+					oy(chir_rad*2-thickness, math.pi/3*2*i)-thickness,
+					 x(chir_rad*2-thickness, math.pi/3*2*i)+thickness,
+					oy(chir_rad*2-thickness, math.pi/3*2*i)+thickness],
+				[(0,0,0),(255,255,255)][chirality])
 
 		img.save(f'{folder}/fronts/{order}{dots}.png')
 
-setback('CUBE', (50,200,50)).save(f'{folder}/back.png')
+setback('S4C2', (50,200,50)).save(f'{folder}/back.png')
