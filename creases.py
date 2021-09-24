@@ -13,23 +13,6 @@ dot_rad = 20
 scale = 230
 plot = lambda c, r, t, s=scale: (cardwidth/2 + c[0]*scale + math.sin(t)*r*s, cardheight/2 + c[1]*scale + math.cos(t)*r*s)
 
-creases = [
-	((0,1),(0,4)),
-	((0,1),(3,4)),
-	((0,1),(3,1)),
-	((0,1),(3,-2)),
-	# ((0,1),(0,-1)),
-	((0,1),(-3,-2)),
-	((0,1),(-3,1)),
-	((0,1),(-3,4)),
-	((0,-1),(0,-4)),
-	((0,-1),(3,2)),
-	((0,-1),(3,-1)),
-	((0,-1),(3,-4)),
-	((0,-1),(-3,-4)),
-	((0,-1),(-3,-1)),
-	((0,-1),(-3,2)),
-]
 vertices = [
 	(0,-1),
 	(0,1),
@@ -48,6 +31,7 @@ for i in range(1,6): # (0,1) dir
 			img, draw = blankcard()
 			# draw_orienter(draw)
 
+			# # draw gray lines
 			# for v in vertices:
 			# 	draw.ellipse([plot(v, dot_rad, math.pi*5/4, 1), plot(v, dot_rad, math.pi*1/4, 1)], grid_color)
 			# 	for d in range(6):
