@@ -21,10 +21,10 @@ dot_colors = [
 
 ### dodecahedron drawing
 
-# positions of dodecahedron points --- should be determined by Geometry
+# positions of dodecahedron points
 inner_rad = 120
-outer_rad = 1.5 * inner_rad 
-dtheta = math.pi/24 # offset of outer points from odd multiples of pi/6
+outer_rad = 2**.5 * inner_rad 
+dtheta = math.acos((1+5**.5)*6**.5/8) # offset of outer points from odd multiples of pi/6
 
 dodecahodron_colors = {# indexed by magic numbers from order_to_color
 	 6: (255,0,0),
