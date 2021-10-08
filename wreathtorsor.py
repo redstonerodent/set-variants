@@ -7,7 +7,6 @@ folder = 'wreathtorsor'
 hexrad = 200 # radius of outer hexagon
 thickness = 10 # black lines
 gap = 5 # white gaps
-dotrad = 100 # radius of white circles
 width = 30 # outlined rhombi
 sep = 450 # between cube and octahedron
 chir_rad = 40 # chirality spirals
