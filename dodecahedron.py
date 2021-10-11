@@ -13,7 +13,7 @@ dotoutline = 5
 
 ### dodecahedron drawing
 
-# positions of dodecahedron points
+# positions of vertices
 d_inner_rad = 120
 d_outer_rad = 1.5 * d_inner_rad # todo
 
@@ -30,7 +30,7 @@ x = lambda r, t: cardwidth/2+math.sin(t)*r
 dy = lambda r, t: cardheight/2-sep/2+math.cos(t)*r
 dp = lambda r, t: (x(r,t), dy(r,t))
 
-# (coordinates of pentagon, permutation of inscribed cube edges
+# (coordinates of pentagon, permutation of inscribed cube edges)
 # by fiat, middle face is the identity
 dodecahedron_faces = [
 	([dp(d_inner_rad, math.pi/5*2*i) for i in range(5)], [0,1,2,3,4]),
@@ -42,7 +42,6 @@ dodecahedron_faces = [
 	]
 ]
 
-
 # for a face of the dodecahdron,
 # given p = [position of the diagonal on this face that's part of cube i for i in range(5)]
 # return a number that depends on the equivalence class under the necklace group
@@ -51,6 +50,9 @@ order_to_color = lambda p: ((p[1]-p[0])%5 + 4*((p[2]-p[0])%5))**2 % 25
 
 ### icosahedron drawing
 
+# positions of vertices
+i_inner_rad = 160
+i_outer_rad = 1.1 * i_inner_rad # todo
 
 icosahedron_colors = [
 	(255,0,0),
@@ -60,9 +62,15 @@ icosahedron_colors = [
 	(255,0,255),
 ]
 
-
 iy = lambda r, t: cardheight/2+sep/2+math.cos(t)*r
 ip = lambda r, t: (x(r,t), iy(r,t))
+
+# (coordinates of triangle, number of color)
+# requires care to make this the same isometry as the dodecahedron
+icosahedron_faces = [
+	*[([ip(0,0), ip(i_inner_rad, math.pi/5*(2*i-3)), ip(i_inner_rad, math.pi/5*(2*i-1))], i) for i in range(5)],
+	*[([ip(i_inner_rad, math.pi/5*(2*i+1)), ip(i_inner_rad, math.pi/5*(2*i+3)), ip(i_outer_rad, math.pi/5*2*(i+1))], i) for i in range(5)],
+]
 
 
 # time to make the cards
@@ -82,32 +90,18 @@ for position in permutations(range(5)): # position[i] is the position of color i
 	for pentagon, _ in dodecahedron_faces:
 		draw.line(pentagon*2, (0,0,0), thickness, 'curve')
 
-	# # white gaps
-	# for i in range(3):
-	# 	draw.line([cp(0,0), cp(hexrad, math.pi/3*(2*i-1)), cp(hexrad, math.pi/3*(2*i)), cp(hexrad, math.pi/3*(2*i+1)), cp(0,0)], (255,255,255), thickness+2*gap, 'curve')
-	# # black lines
-	# for i in range(3):
-	# 	draw.line([cp(0,0), cp(hexrad, math.pi/3*(2*i-1)), cp(hexrad, math.pi/3*(2*i)), cp(hexrad, math.pi/3*(2*i+1)), cp(0,0)], (0,0,0), thickness, 'curve')
-	
-	# # draw octahedron
-	# draw.polygon([op(hexrad, math.pi/3*2*i) for i in range(3)], octahedoncolors[colorvertex(dots)])
-	# for i in range(3):
-	# 	draw.polygon([op(hexrad, math.pi/3*(2*i-1)+math.pi), op(hexrad, math.pi/3*(2*i)+math.pi), op(hexrad, math.pi/3*(2*i+1)+math.pi)], octahedoncolors[colorvertex(dots^(2**order.index(i)))])
-	# # white gaps
-	# draw.line([op(hexrad, math.pi/3*i) for i in range(8)], (255,255,255), thickness+2*gap, 'curve')
-	# draw.line([op(hexrad, math.pi/3*2*i) for i in range(5)], (255,255,255), thickness+2*gap, 'curve')
-	# # black lines
-	# draw.line([op(hexrad, math.pi/3*i) for i in range(8)], (0,0,0), thickness, 'curve')
-	# draw.line([op(hexrad, math.pi/3*2*i) for i in range(5)], (0,0,0), thickness, 'curve')
-
-	# draw permutation dots
-	for i,color in enumerate(dot_colors):
-		# I think this is the backwards permutation right now
-		draw.ellipse([cardwidth/2-(2-position[i])*dotsep-dotrad, cardheight/2-dotrad, cardwidth/2-(2-position[i])*dotsep+dotrad, cardheight/2+dotrad], color, (0,0,0), dotoutline)
+	# draw icosahedron
+	for triangle, color in icosahedron_faces:
+		draw.polygon(triangle, icosahedron_colors[position.index(color)])
+	# outlines
+	for triangle, _ in icosahedron_faces:
+		draw.line(triangle*2, (255,255,255), thickness+2*gap, 'curve')
+	for triangle, _ in icosahedron_faces:
+		draw.line(triangle*2, (0,0,0), thickness, 'curve')
 
 
 
 
 	img.save(f'{folder}/fronts/{position}.png')
 
-setback('OCTA', (50,200,50)).save(f'{folder}/back.png')
+setback('A5T', (0,200,225)).save(f'{folder}/back.png')
