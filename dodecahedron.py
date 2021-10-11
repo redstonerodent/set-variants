@@ -11,20 +11,11 @@ dotrad = 50
 dotsep = 120 # between centers of dots
 dotoutline = 5
 
-dot_colors = [
-	(255,0,0),
-	(0,255,0),
-	(0,0,255),
-	(255,255,0),
-	(255,0,255),
-]
-
 ### dodecahedron drawing
 
 # positions of dodecahedron points
-inner_rad = 120
-outer_rad = 2**.5 * inner_rad 
-dtheta = math.acos((1+5**.5)*6**.5/8) # offset of outer points from odd multiples of pi/6
+d_inner_rad = 120
+d_outer_rad = 1.5 * d_inner_rad # todo
 
 dodecahodron_colors = {# indexed by magic numbers from order_to_color
 	 6: (255,0,0),
@@ -40,15 +31,17 @@ dy = lambda r, t: cardheight/2-sep/2+math.cos(t)*r
 dp = lambda r, t: (x(r,t), dy(r,t))
 
 # (coordinates of pentagon, permutation of inscribed cube edges
-# arbitrarily one is the identity
+# by fiat, middle face is the identity
 dodecahedron_faces = [
-	([dp(0,0), dp(inner_rad, 0), dp(outer_rad, math.pi/6+dtheta), dp(outer_rad, math.pi/6*3-dtheta), dp(inner_rad, math.pi/3*2)], [0,1,2,3,4]),
-	([dp(0,0), dp(inner_rad, math.pi/3*2), dp(outer_rad, math.pi/6*5+dtheta), dp(outer_rad, math.pi/6*7-dtheta), dp(inner_rad, math.pi/3*4)], [0,2,4,3,1]),
-	([dp(0,0), dp(inner_rad, math.pi/3*4), dp(outer_rad, math.pi/6*9+dtheta), dp(outer_rad, math.pi/6*11-dtheta), dp(inner_rad, 0)], [0,4,1,3,2]),
-	([dp(inner_rad, 0), dp(outer_rad, math.pi/6+dtheta), dp(outer_rad, math.pi/6-dtheta), dp(outer_rad, math.pi/6*11+dtheta), dp(outer_rad, math.pi/6*11-dtheta)], [0,3,2,4,1]),
-	([dp(inner_rad, math.pi/3*2), dp(outer_rad, math.pi/6*5+dtheta), dp(outer_rad, math.pi/6*5-dtheta), dp(outer_rad, math.pi/6*3+dtheta), dp(outer_rad, math.pi/6*3-dtheta)], [0,2,1,4,3]),
-	([dp(inner_rad, math.pi/3*4), dp(outer_rad, math.pi/6*9+dtheta), dp(outer_rad, math.pi/6*9-dtheta), dp(outer_rad, math.pi/6*7+dtheta), dp(outer_rad, math.pi/6*7-dtheta)], [0,1,3,4,2]),
+	([dp(d_inner_rad, math.pi/5*2*i) for i in range(5)], [0,1,2,3,4]),
+	*[
+		([
+			dp(d_inner_rad, math.pi/5*2*i), dp(d_inner_rad, math.pi/5*2*(i+1)), dp(d_outer_rad, math.pi/5*2*(i+1)), dp(d_outer_rad, math.pi/5*(2*i+1)), dp(d_outer_rad, math.pi/5*2*i)],
+			[(i+[0,2,1,4,3][(j-i)%5])%5 for j in range(5)])
+		for i in range(5)
+	]
 ]
+
 
 # for a face of the dodecahdron,
 # given p = [position of the diagonal on this face that's part of cube i for i in range(5)]
@@ -56,15 +49,23 @@ dodecahedron_faces = [
 # this tells you which face it is (up to opposites)
 order_to_color = lambda p: ((p[1]-p[0])%5 + 4*((p[2]-p[0])%5))**2 % 25
 
-# octahedoncolors = [(145,0,215), (255, 150, 0), (255,0,200), (0,190,150)]
-
-# oy = lambda r, t: cardheight/2+sep/2+math.cos(t)*r
-# op = lambda r, t: (x(r,t), oy(r,t))
+### icosahedron drawing
 
 
-# find octahedron color index
-# colorvertex = lambda dots: 3*(dots>>2)^(dots&3)
+icosahedron_colors = [
+	(255,0,0),
+	(0,255,0),
+	(0,0,255),
+	(255,255,0),
+	(255,0,255),
+]
 
+
+iy = lambda r, t: cardheight/2+sep/2+math.cos(t)*r
+ip = lambda r, t: (x(r,t), iy(r,t))
+
+
+# time to make the cards
 for position in permutations(range(5)): # position[i] is the position of color i, or of the ith inscribed cube
 	# skip odd permutations
 	if sum(position[i]>position[j] for i in range(5) for j in range(i,5))%2: continue
