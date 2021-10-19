@@ -4,9 +4,11 @@ import math
 
 folder = 'dodecahedron'
 
+phi = (1+5**.5)/2
+
 thickness = 10 # black lines
 gap = 3 # white gaps
-sep = 500 # between dodecahedron and icosahedron
+sep = 450 # between dodecahedron and icosahedron
 dotrad = 50
 dotsep = 120 # between centers of dots
 dotoutline = 5
@@ -14,16 +16,16 @@ dotoutline = 5
 ### dodecahedron drawing
 
 # positions of vertices
-d_inner_rad = 120
-d_outer_rad = 1.5 * d_inner_rad # todo
+d_inner_rad = 130
+d_outer_rad = phi * d_inner_rad
 
 dodecahodron_colors = {# indexed by magic numbers from order_to_color
-	 6: (255,0,0),
-	11: (0,255,0),
-	14: (0,0,255),
-	19: (255,255,0),
-	21: (255,0,255),
-	24: (0,255,255),
+	 6: (255, 30, 30),
+	11: (255, 220, 0),
+	14: (0, 225, 60),
+	19: (0, 188, 220),
+	21: (128, 50, 255),
+	24: (215, 50, 255),
 }
 
 x = lambda r, t: cardwidth/2+math.sin(t)*r
@@ -51,15 +53,14 @@ order_to_color = lambda p: ((p[1]-p[0])%5 + 4*((p[2]-p[0])%5))**2 % 25
 ### icosahedron drawing
 
 # positions of vertices
-i_inner_rad = 160
-i_outer_rad = 1.1 * i_inner_rad # todo
+i_rad = d_outer_rad
 
 icosahedron_colors = [
-	(255,0,0),
-	(0,255,0),
-	(0,0,255),
-	(255,255,0),
-	(255,0,255),
+	(255, 128, 0),
+	(28, 145, 0),
+	(115, 0, 175),
+	(50, 50, 255),
+	(235, 0, 185),
 ]
 
 iy = lambda r, t: cardheight/2+sep/2+math.cos(t)*r
@@ -68,8 +69,8 @@ ip = lambda r, t: (x(r,t), iy(r,t))
 # (coordinates of triangle, number of color)
 # requires care to make this the same isometry as the dodecahedron
 icosahedron_faces = [
-	*[([ip(0,0), ip(i_inner_rad, math.pi/5*(2*i-3)), ip(i_inner_rad, math.pi/5*(2*i-1))], i) for i in range(5)],
-	*[([ip(i_inner_rad, math.pi/5*(2*i+1)), ip(i_inner_rad, math.pi/5*(2*i+3)), ip(i_outer_rad, math.pi/5*2*(i+1))], i) for i in range(5)],
+	*[([ip(0,0), ip(i_rad, math.pi/5*(2*i-3)), ip(i_rad, math.pi/5*(2*i-1))], i) for i in range(5)],
+	*[([ip(i_rad, math.pi/5*(2*i+1)), ip(i_rad, math.pi/5*(2*i+3)), ip(i_rad, math.pi/5*2*(i+1))], i) for i in range(5)],
 ]
 
 
@@ -104,4 +105,4 @@ for position in permutations(range(5)): # position[i] is the position of color i
 
 	img.save(f'{folder}/fronts/{position}.png')
 
-setback('A5T', (0,200,225)).save(f'{folder}/back.png')
+setback('A5SET', (0,200,225)).save(f'{folder}/back.png')

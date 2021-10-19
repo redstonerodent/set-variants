@@ -19,9 +19,10 @@ def setback(text, color, orienter=True):
 
 	draw.rounded_rectangle([cardwidth/2-midw/2-rounding, cardheight/2-midh/2-rounding, cardwidth/2+midw/2+rounding, cardheight/2+midh/2+rounding], rounding, (255,255,255))
 
-	d = ImageDraw.Draw(txt := Image.new("L", [midh+rounding, midw+rounding], 255))
-	d.text([(midh+rounding)/2, (midw+rounding)/2], text, 0, ImageFont.truetype("Ubuntu-M.ttf", 200), "mm")
-	img.paste(txt.rotate(90, expand=True, fillcolor=255), [(cardwidth-midw-rounding)//2, (cardheight-midh-rounding)//2])
+	drawh, draww = midh + rounding*2, midw + rounding*2
+	d = ImageDraw.Draw(txt := Image.new("L", [drawh, draww], 0))
+	d.text([(drawh)/2, (draww)/2], text, 255, ImageFont.truetype("Ubuntu-M.ttf", 200), "mm")
+	img.paste(Image.new("L",[draww, drawh],0), [(cardwidth-draww)//2, (cardheight-drawh)//2], mask=txt.rotate(90, expand=True, fillcolor=255))
 
 	if orienter: draw.polygon([(cardwidth,0), (cardwidth,orienter_size), (cardwidth-orienter_size, 0)], (0,0,0))
 
