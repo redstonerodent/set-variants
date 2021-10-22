@@ -8,10 +8,7 @@ phi = (1+5**.5)/2
 
 thickness = 10 # black lines
 gap = 3 # white gaps
-sep = 450 # between dodecahedron and icosahedron
-dotrad = 50
-dotsep = 120 # between centers of dots
-dotoutline = 5
+sep = 470 # between dodecahedron and icosahedron
 
 ### dodecahedron drawing
 

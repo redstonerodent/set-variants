@@ -7,7 +7,7 @@ folder = 'creases2'
 colors = [(255,0,0), (50,50,255)]
 thickness = 15
 grid_width = 5
-grid_color = (200,200,200)
+grid_color = (240,240,240)
 dot_rad = 10
 
 scale = 230
