@@ -4,13 +4,13 @@ import math
 
 folder = 's3wreathc2'
 
-sep = 450 # between centers of triangles
+sep = 400 # between centers of triangles
 t_rad = 160 # radius of each triangle
-width = 5 # dot outlines
+width = 10 # dot outlines
 dot_rad = 70
 spinner_width = 15
 
-dot_colors = [[(255,0,0), (245,245,0), (0,144,255)], [(240,150,0), (0,180,0), (128,0,255)]]
+dot_colors = [[(255,0,0), (245,245,0), (0,144,255)], [(240,150,0), (0,180,0), (150,0,255)]]
 spinner_colors = [(0,0,0), (150,150,150)]
 
 polar = lambda p,r,t: (p[0]+math.cos(t/180*math.pi)*r, p[1]+math.sin(t/180*math.pi)*r)
@@ -35,11 +35,11 @@ for orders in product(permutations(range(3)), repeat=2): # orders[b] is the perm
 
 			# draw spinner
 			sign = sum(orders[T][i]>orders[T][j] for i in range(3) for j in range(i,3))%2
-			spinner(draw, p, t_rad, 90+60*t+(-1)**sign*20, sign, spinner_width, spinner_colors[T])
+			spinner(draw, p, t_rad, 90+60*t+(-1)**sign*25, sign, spinner_width, spinner_colors[T])
 
 			# draw dots
 			for i in range(3):
-				draw.ellipse(bounding_box(polar(p, t_rad, 90+60*t+120*i), dot_rad), dot_colors[T][i], spinner_colors[T], width)
+				draw.ellipse(bounding_box(polar(p, t_rad, 90+60*t+120*i), dot_rad), dot_colors[T][i], (spinner_colors[T]), width)
 
 
 
