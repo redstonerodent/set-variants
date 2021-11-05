@@ -35,7 +35,7 @@ for rotations in product(range(3), repeat=3): # rotations[i] is the rotation the
 
 			# dots
 			for i,v in enumerate(vertices):
-				draw.ellipse(bounding_box(v, dot_rad), dot_colors[T][i], (0,0,0), width)
+				draw.ellipse(bounding_box(v, dot_rad), dot_colors[T][(i+rotations[T])%3], (0,0,0), width)
 
 
 

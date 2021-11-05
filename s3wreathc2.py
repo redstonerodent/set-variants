@@ -39,7 +39,7 @@ for orders in product(permutations(range(3)), repeat=2): # orders[i] is the perm
 
 			# draw dots
 			for i in range(3):
-				draw.ellipse(bounding_box(polar(p, t_rad, 90+60*t+120*i), dot_rad), dot_colors[T][i], (spinner_colors[T]), width)
+				draw.ellipse(bounding_box(polar(p, t_rad, 90+60*t+120*i), dot_rad), dot_colors[T][orders[T][i]], (spinner_colors[T]), width)
 
 
 
