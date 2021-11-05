@@ -1,7 +1,15 @@
 from PIL import Image, ImageDraw, ImageFont
 import textwrap
+import math
 
 cardsize = cardwidth, cardheight = 825, 1125 # poker deck on thegamecrafter.com
+cardcenter = cardwidth/2,cardheight/2
+
+## utility functions to help draw
+# polar coordinates from given center, using degrees
+polar = lambda p,r,t: (p[0]+math.cos(t/180*math.pi)*r, p[1]+math.sin(t/180*math.pi)*r)
+# bounding squares with given radius for e.g. draw.ellipse
+bounding_box = lambda p,r: [p[0]-r, p[1]-r, p[0]+r, p[1]+r]
 
 def blankcard(color=(255,255,255)):
 	img = Image.new("RGB", cardsize, color)

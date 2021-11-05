@@ -24,7 +24,7 @@ def spinner(draw, p, r, theta, sign, width, color):
 		draw.arc(bounding_box(polar(p,r/2,t), r/2+width/2), *[t,t-180][::(-1)**sign], color, width)
 
 
-for orders in product(permutations(range(3)), repeat=2): # orders[b] is the permutation of the triangle in the bth position
+for orders in product(permutations(range(3)), repeat=2): # orders[i] is the permutation of the ith triangle
 	for swap in range(2): # says whether triangles are swapped
 		img, draw = blankcard()
 		draw_orienter(draw)
